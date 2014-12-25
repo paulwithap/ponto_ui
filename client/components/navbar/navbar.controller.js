@@ -1,15 +1,22 @@
 'use strict';
 
 angular.module('pontoApp')
-  .controller('NavbarCtrl', function ($scope, $location) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [
       {
         'title': 'Home',
-        'link': '/'
+        'link': '/',
+        'show': true
       },
       {
         'title': 'Login',
-        'link': '/login'
+        'link': '/login',
+        'show': !Auth.isAuthenticated()
+      },
+      {
+        'title': 'Logout',
+        'link': '/logout',
+        'show': Auth.isAuthenticated()
       }
     ];
 
