@@ -1,0 +1,22 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+  <div class="col-md-12">
+    <a ng-click="openModal()" class="btn btn-primary pull-right">New Customer</a>
+    <table class="table table-hover">
+      <thead>
+        <th>Name</th>
+        <th>Website</th>
+        <th>Notes</th>
+        <th>Account ID</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="customer in customers" ng-click="openModal(customer)" class="customer-tr">
+          <td>{{customer.name}}</td>
+          <td>{{customer.website}}</td>
+          <td>{{customer.notes}}</td>
+          <td>{{customer.account_id}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
