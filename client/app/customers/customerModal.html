@@ -3,7 +3,8 @@
   <h3 class="modal-title" ng-if="customer.id">Edit Customer</h3>
 </div>
 <div class="modal-body">
-  <form name="form">
+  <h4>Basic Information</h4>
+  <form name="infoForm">
     <div class="form-group">
       <label for="customerName">Name</label>
       <input type="text" class="form-control" id="customerName" ng-model="customer.name">
@@ -25,6 +26,72 @@
       <textarea name="notes" id="customerNotes" rows="3" class="form-control" ng-model="customer.notes"></textarea>
     </div>
   </form>
+  <hr>
+  <h4>Addresses</h4>
+  <div ng-repeat="address in addresses" class="address-form-container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="addressCompany-{{$index}}">Company</label>
+              <input type="text" class="form-control" id="addressCompany-{{$index}}" ng-model="address.company">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="addressName-{{$index}}">C/O</label>
+              <input type="text" class="form-control" id="addressName-{{$index}}" ng-model="address.name">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="addressAddress1-{{$index}}">Address 1</label>
+          <input type="text" class="form-control" id="addressAddress1-{{$index}}" ng-model="address.address_1">
+        </div>
+        <div class="form-group">
+          <label for="addressAddress2-{{$index}}">Address 2</label>
+          <input type="text" class="form-control" id="addressAddress2-{{$index}}" ng-model="address.address_2">
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <div class="form-group">
+              <label for="addressCity-{{$index}}">City</label>
+              <input type="text" class="form-control" id="addressCity-{{$index}}" ng-model="address.city">
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label for="addressState-{{$index}}">State</label>
+              <input type="text" class="form-control" id="addressState-{{$index}}" ng-model="address.state">
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label for="addressZipCode-{{$index}}">Zip Code</label>
+              <input type="text" class="form-control" id="addressZipCode-{{$index}}" ng-model="address.zip_code">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="addressCountry-{{$index}}">Country</label>
+              <input type="text" class="form-control" id="addressCountry-{{$index}}" ng-model="address.country">
+            </div>
+          </div>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="is_default_billing"> Default Billing
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="is_default_shipping"> Default Shipping
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="modal-footer">
   <a ng-click="save()" class="btn btn-primary">Save</a>

@@ -1,3 +1,13 @@
 .customer-tr {
   cursor: pointer;
 }
+
+.address-form-container {
+  padding: 20px 0;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+}
+
+.address-form-container + .address-form-container {
+  margin-top: 20px;
+}
