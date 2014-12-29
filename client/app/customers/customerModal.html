@@ -5,9 +5,20 @@
 <div class="modal-body">
   <h4>Basic Information</h4>
   <form name="infoForm">
-    <div class="form-group">
-      <label for="customerName">Name</label>
-      <input type="text" class="form-control" id="customerName" ng-model="customer.name">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="customerName">Name</label>
+          <input type="text" class="form-control" id="customerName" ng-model="customer.name">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="customerTypes">Customer Type</label>
+          <select name="customerTypes" id="customerTypes" class="form-control"
+                  ng-options="type.id as type.name for type in customerTypes" ng-model="customer.customer_type_id"></select>
+        </div>
+      </div>
     </div>
     <div class="form-group">
       <label for="customerResaleLicense">Resale License</label>
@@ -29,6 +40,7 @@
   <hr>
   <h4>Addresses</h4>
   <div ng-repeat="address in addresses" class="address-form-container">
+  <span class="pull-right glyphicon glyphicon-remove" ng-click="deleteAddress(address)"></span>
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <div class="row">
