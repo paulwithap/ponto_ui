@@ -40,7 +40,7 @@
   <hr>
   <h4>Addresses</h4>
   <div ng-repeat="address in addresses" class="address-form-container">
-  <span class="pull-right glyphicon glyphicon-remove" ng-click="deleteAddress(address)"></span>
+    <span class="pull-right glyphicon glyphicon-remove" ng-click="deleteAddress(address)"></span>
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <div class="row">
@@ -93,17 +93,50 @@
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox" ng-model="is_default_billing"> Default Billing
+            <input type="checkbox" ng-model="address.is_default_billing"> Default Billing
           </label>
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox" ng-model="is_default_shipping"> Default Shipping
+            <input type="checkbox" ng-model="address.is_default_shipping"> Default Shipping
           </label>
         </div>
       </div>
     </div>
   </div>
+  <a href="#" ng-click="addAddress()">Add a New Address</a>
+  <hr>
+  <h4>Contacts</h4>
+  <div ng-repeat="contact in contacts" class="address-form-container">
+    <span class="pull-right glyphicon glyphicon-remove" ng-click="deleteContact(contact)"></span>
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <label for="contactName-{{$index}}">Name</label>
+              <input type="text" class="form-control" id="contactName-{{$index}}" ng-model="contact.name">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="contactTitle-{{$index}}">Title</label>
+              <input type="text" class="form-control" id="contactTitle-{{$index}}" ng-model="contact.title">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="contactEmail-{{$index}}">Email</label>
+          <input type="text" class="form-control" id="contactEmail-{{$index}}" ng-model="contact.email">
+        </div>
+        <div class="form-group">
+          <label for="contactNotes-{{$index}}">Notes</label>
+          <textarea name="contactNotes-{{$index}}" class="form-control" id="contactNotes-{{$index}}" rows="3" ng-model="contact.notes"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#" ng-click="addContact()">Add a New Contact</a>
 </div>
 <div class="modal-footer">
   <a ng-click="save()" class="btn btn-primary">Save</a>

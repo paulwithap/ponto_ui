@@ -12,8 +12,7 @@ angular.module('pontoApp')
     var init = function() {
       if ($scope.customer.id) {
         $scope.getAddresses();
-      } else {
-        $scope.addresses.push({});
+        $scope.getContacts();
       }
 
       $scope.getCustomerTypes();
@@ -32,13 +31,48 @@ angular.module('pontoApp')
         });
     };
 
+    $scope.addContact = function() {
+      $scope.contacts.push({});
+    };
+
+    $scope.getContacts = function() {
+      $http.get(API_BASE_URL + '/customers/' + $scope.customer.id + '/customer_contacts')
+        .success(function(data, status, headers, config) {
+          $log.info('got contacts');
+          $log.log(data);
+          $scope.contacts = data;
+        })
+        .error(function(data, status, headers, config) {
+          $log.warn('error getting contacts');
+          $log.log(data);
+        });
+    };
+
+    $scope.deleteContact = function(contact) {
+      if (contact.id) {
+        $http.delete(API_BASE_URL + '/customers/' + $scope.customer.id + '/customer_contacts/' + contact.id)
+          .success(function(data, status, headers, config) {
+            $log.info('deleted contact');
+            _.pull($scope.contacts, contact);
+          })
+          .error(function(data, status, headers, config) {
+            $window.alert('Error deleting contact.');
+          });
+      } else {
+        _.pull($scope.contacts, contact);
+      }
+    };
+
+    $scope.addAddress = function() {
+      $scope.addresses.push({});
+    };
+
     $scope.getAddresses = function() {
       $http.get(API_BASE_URL + '/customers/' + $scope.customer.id + '/customer_addresses')
         .success(function(data, status, headers, config) {
           $log.info('got addresses');
           $log.log(data);
           $scope.addresses = data;
-          $scope.addresses.push({});
         })
         .error(function(data, status, headers, config) {
           $log.warn('error getting addresses');
@@ -63,6 +97,7 @@ angular.module('pontoApp')
 
     $scope.save = function() {
       $scope.customer.customer_addresses_attributes = $scope.addresses;
+      $scope.customer.customer_contacts_attributes = $scope.contacts;
 
       var requestBody = { customer: $scope.customer };
 
