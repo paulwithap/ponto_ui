@@ -13,6 +13,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
+      <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
@@ -55,6 +56,7 @@
       <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+      <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
@@ -62,6 +64,7 @@
         <script src="app/app.js"></script>
           <!-- injector:js -->
           <script src="app/Storage/storage.service.js"></script>
+          <script src="app/acctProdOpts/acctProdOptsModal.controller.js"></script>
           <script src="app/auth/auth.controller.js"></script>
           <script src="app/auth/auth.js"></script>
           <script src="app/auth/auth.service.js"></script>
@@ -73,6 +76,7 @@
           <script src="app/products/productModal.controller.js"></script>
           <script src="app/products/products.controller.js"></script>
           <script src="app/products/products.js"></script>
+          <script src="app/taginator/taginator.directive.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <!-- endinjector -->
         <!-- endbuild -->

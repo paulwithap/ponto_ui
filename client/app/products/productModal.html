@@ -17,45 +17,105 @@
       <label for="productDescription">Description</label>
       <textarea name="notes" id="productDescription" rows="3" class="form-control" ng-model="product.description"></textarea>
     </div>
+    <div class="form-group">
+      <input type="checkbox" class="form-control" id="productHasVariants" ng-model="product.hasVariants" ng-checked="product.variants.length" ng-disabled="product.variants.length">
+      <label for="productHasVariants">This product has variants.</label>
+    </div>
   </form>
   <hr>
-  <h4>Variants</h4>
-    <div ng-repeat="variant in variants" class="address-form-container">
+  <span ng-show="product.hasVariants">
+    <h4>Options</h4>
+    <form class="form-inline" ng-repeat="option in productOptions">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="optionsList">Option Name</label>
+            <select  name="optionsList" id="optionsList" ng-model="option.name" ng-change="onAcctProdOptChange(option)">
+              <option value="opt.name" ng-repeat="opt in acctProdOpts">{{opt.name}}</option>
+              <option value="new" ng-click="newAcctProdOpt()">Create New</option>
+            </select>
+            <!-- <a ng-click="newAcctProdOpt()">Add a New Option</a> -->
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="form-group">
+            <label for="">Option Values</label>
+            <tags-input class="tags-input-box" ng-model="option.values" on-tag-added="onTagAdded($tag, option.name)" on-tag-removed="onTagRemoved($tag)"></tags-input>
+          </div>
+        </div>
+      </div>
+    </form>
+    <a ng-click="addProductOption()" ng-show="productOptions.length && productOptions.length <= 3">Add Another Option</a>
+    <h4>Variants</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Variant Name</th>
+          <th>SKU</th>
+          <th>Weight</th>
+          <th>Base Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="variant in variants">
+          <td>{{variant.name}}</td>
+          <td>{{variant.sku}}</td>
+          <td>{{variant.weight}}</td>
+          <td>TODO</td>
+        </tr>
+      </tbody>
+    </table>
+<!--     <div ng-repeat="variant in variants" class="address-form-container">
       <span class="pull-right glyphicon glyphicon-remove" ng-click="deleteVariant(variant)"></span>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="variantName-{{$index}}">Variant Name</label>
-                  <input type="text" class="form-control" id="variantName={{$index}}" ng-model="variant.name">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="variantSku-{{$index}}">SKU</label>
-                  <input type="text" class="form-control" id="variantSku={{$index}}" ng-model="variant.sku">
-                </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="variantName-{{$index}}">Variant Name</label>
+                <input type="text" class="form-control" id="variantName={{$index}}" ng-model="variant.name">
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="variantWeight-{{$index}}">Weight</label>
-                  <input type="text" class="form-control" id="variantWeight-{{$index}}" ng-model="variant.weight">
-                </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="variantSku-{{$index}}">SKU</label>
+                <input type="text" class="form-control" id="variantSku={{$index}}" ng-model="variant.sku">
               </div>
-            </div>
-            <div class="form-group">
-              <label for="variantDescription-{{$index}}">Variant Description</label>
-              <textarea name="" id="variantDescription" rows="3" class="form-control"></textarea>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="variantWeight-{{$index}}">Weight</label>
+                <input type="text" class="form-control" id="variantWeight-{{$index}}" ng-model="variant.weight">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="variantDescription-{{$index}}">Variant Description</label>
+            <textarea name="" id="variantDescription" rows="3" class="form-control"></textarea>
+          </div>
         </div>
-    </div>
-  <a href="#" ng-click="addVariant()">Add a New Variant</a>
+      </div>
+    </div> -->
+    <a href="#" ng-click="addVariant()">Add a New Variant</a>
+  </span>
 </div>
 <div class="modal-footer">
   <a ng-click="save()" class="btn btn-primary">Save</a>
   <a ng-click="cancel()" class="btn btn-default">Cancel</a>
 </div>
+<script type="text/ng-template" id="acctProdOptsModal.html">
+  <div class="modal-header">
+    <h3>New Product Option</h3>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="acctProdOpt">Option Name</label>
+      <input type="text" class="form-control" id="acctProdOpt" ng-model="option.name">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a ng-click="save()" class="btn btn-primary">Save</a>
+  </div>
+</script>
