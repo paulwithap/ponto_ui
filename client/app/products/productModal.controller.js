@@ -66,45 +66,53 @@ angular.module('pontoApp')
       }
     };
 
+    // var recur = function(vari, opts, k) {
+    //   if (k === opts.length) {
+    //     vari.name += ' / ' + val.text;
+    //     vari.sku += '-' + val.text.substr(0, 3);
+    //     vari['option' + (idx + 1)] = val.text;
+    //     tempVars.push(vari);
+    //   } else {
+    //     for(var i = 0; i < opts[k].values.length; i++) {
+    //       vari.name += opts[k]
+    //       recur()
+    //     }
+    //   }
+    // };
+
+    var tempVars = [];
+    var options = [{name: 'size', values: ['small', 'medium', 'large']}, {name: 'color', values: ['black', 'red']}, {name: 'mat', values: ['cotton', 'hemp']}];
+
+
     $scope.generateVariants = function() {
-      var option = $scope.productOptions[0],
-          remainingOpts = _.without($scope.productOptions, option),
-          tempVariants = [];
+      var tempVariants = [],
+          baseSku = $scope.product.sku || $scope.product.name.substr(0, 3);
 
-      _.forEach(option.values, function(value) {
-        var baseSku = $scope.product.sku || $scope.product.name.substr(0, 3);
-
-        if (remainingOpts.length && remainingOpts[0].values.length) {
-          _.forEach(remainingOpts, function(opt, idx) {
-            _.forEach(opt.values, function(val) {
-              var variant = {
-                name: value.text,
-                sku: baseSku + '-' + value.text.substr(0, 3),
-                weight: $scope.product.weight || 0,
-                description: $scope.product.description || '',
-                option1: value.text
-              };
-              variant.name += ' / ' + val.text;
-              variant.sku += '-' + val.text.substr(0, 3);
-              variant['option' + (idx + 1)] = val.text;
-              tempVariants.push(variant);
-
-            });
-          });
-        } else {
+      function recurse(name, sku, attrs, k) {
+        if(k === attrs.length) {
           var variant = {
-            name: value.text,
-            sku: baseSku + '-' + value.text.substr(0, 3),
+            name: $scope.product.name + ' - ' + name,
+            sku: sku,
             weight: $scope.product.weight || 0,
-            description: $scope.product.description || '',
-            option1: value.text
+            description: $scope.product.description || ''
           };
-
           tempVariants.push(variant);
-        }
-      });
+        } else {
+            for(var i = 0; i < attrs[k].values.length; i++) {
+              var newName = name.length ? name + ' ' + '/' + ' ' + attrs[k].values[i].text : attrs[k].values[i].text,
+                  newSku = sku.length ? sku + '-' + attrs[k].values[i].text.substr(0,3) : attrs[k].values[i].text.substr(0,3);
 
-      $scope.variants = tempVariants;
+              recurse(newName, newSku, attrs, k+1);
+            }
+        }
+      }
+
+      recurse('', baseSku, $scope.productOptions, 0);
+
+      // catch new option with no values
+      if (tempVariants.length) {
+        $scope.variants = tempVariants;
+      }
     };
 
     $scope.removeVariants = function(option) {
