@@ -4,10 +4,6 @@ angular.module('pontoApp')
   .controller('ProductsCtrl', function ($scope, $http, $log, $modal) {
     $scope.products = [];
 
-    var init = function() {
-      $scope.getProducts();
-    };
-
     $scope.getProducts = function() {
       $http.get('http://localhost:3000/api/v1/products').success(function(response) {
         $scope.products = response;
@@ -35,6 +31,10 @@ angular.module('pontoApp')
       }, function() {
         $log.info('Modal dismissed.');
       });
+    };
+
+    var init = function() {
+      $scope.getProducts();
     };
 
     init();

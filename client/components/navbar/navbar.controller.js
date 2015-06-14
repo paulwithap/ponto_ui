@@ -19,6 +19,11 @@ angular.module('pontoApp')
         'show': true
       },
       {
+        'title': 'Orders',
+        'link': '/orders',
+        'show': true
+      },
+      {
         'title': 'Login',
         'link': '/login',
         'show': !Auth.isAuthenticated()
