@@ -9,7 +9,9 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="customer">Customer</label>
-          <input type="text" class="form-control" id="customer" ng-model="selectedCustomer" typeahead="customer for customer in getCustomers($viewValue)" >
+          <input type="text" class="form-control" id="customer" ng-model="selectedCustomer"
+                 typeahead="customer as customer.name for customer in getCustomers($viewValue)"
+                 typeahead-on-select="addCustomerHandler($item, $model, $label)">
         </div>
       </div>
     </div>
@@ -19,8 +21,16 @@
     </div>
   </form>
   <hr>
-  <pto-product-select on-add="addProductHandler()">
-  </pto-product-select>
+  <table class="table">
+    <thead>
+      <th>Item</th>
+      <th>QTY</th>
+      <th>Price</th>
+      <th>Total</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
 </div>
 <div class="modal-footer">
   <a ng-click="save()" class="btn btn-primary">Save</a>

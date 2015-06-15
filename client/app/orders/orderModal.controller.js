@@ -54,10 +54,7 @@ angular.module('pontoApp')
       }).then(function(response) {
         $log.log('customers response');
         $log.log(response);
-        return response.data.map(function(item) {
-          $log.log(item.name);
-          return item.name;
-        });
+        return response.data;
       });
         // .success(function(data, status, headers, config) {
         //   $log.info('got customers');
@@ -68,6 +65,11 @@ angular.module('pontoApp')
         //   $log.warn('error getting customers');
         //   $log.log(data);
         // });
+    };
+
+    $scope.addCustomerHandler = function(item, model, label) {
+      $scope.order.customer = angular.copy(model);
+      $scope.order.customer_id = model.id;
     };
 
     $scope.save = function() {
