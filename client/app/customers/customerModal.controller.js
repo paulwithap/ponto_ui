@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pontoApp')
-  .controller('CustomerModalCtrl', function ($scope, $http, $log, $window, $modalInstance, customer, API_BASE_URL) {
+  .controller('CustomerModalCtrl', function ($scope, $http, $log, $window, $modal, $modalInstance, customer, API_BASE_URL) {
     $log.log('customer');
     $log.log(customer);
     $scope.customer = customer;
@@ -29,6 +29,20 @@ angular.module('pontoApp')
           $log.warn('error getting customerTypes');
           $log.log(data);
         });
+    };
+
+    $scope.addCustomerType = function() {
+      var modalInstance = $modal.open({
+        templateUrl: 'app/customerTypes/addCustomerTypeModal.html',
+        controller: 'AddCustomerTypeModalCtrl',
+        size: 'sm'
+      });
+
+      modalInstance.result.then(function(customerType) {
+        $scope.getCustomerTypes();
+      }, function() {
+        $log.info('Modal dismissed.');
+      });
     };
 
     $scope.addContact = function() {

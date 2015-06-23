@@ -14,10 +14,12 @@
                  typeahead-on-select="addCustomerHandler($item, $model, $label)">
         </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="orderPoNumber">Purchase Order Number</label>
-      <textarea name="notes" id="orderPoNumber" rows="3" class="form-control" ng-model="order.po_number"></textarea>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="orderPoNumber">Purchase Order Number</label>
+          <input type="text" id="orderPoNumber" class="form-control" ng-model="order.po_number">
+        </div>
+      </div>
     </div>
   </form>
   <hr>
@@ -29,8 +31,15 @@
       <th>Total</th>
     </thead>
     <tbody>
+      <tr ng-repeat="product in orderProducts">
+        <td>{{product.name}}<br>{{product.description}}</td>
+        <td><input type="number" ng-model="product.quantity"></td>
+        <td><input type="text" ng-model="product.price"></td>
+        <td>{{product.quantity * product.price}}</td>
+      </tr>
     </tbody>
   </table>
+  <a ng-click="addProducts()">Add Products to Order</a>
 </div>
 <div class="modal-footer">
   <a ng-click="save()" class="btn btn-primary">Save</a>

@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h3 class="modal-title">Add Products</h3>
+</div>
+<div class="modal-body">
+  <table class="table">
+    <thead>
+      <th>Item</th>
+      <th>QTY</th>
+      <th>Price</th>
+      <th>Total</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="variant in variants">
+        <td>{{variant.name}} - {{variant.sku}}</td>
+        <td><input type="number" ng-model="variant.quantity"></td>
+        <td><input type="text" ng-model="variant.price"></td>
+        <td>{{variant.quantity * variant.price}}</td>
+        <td><span class="glyphicon glyphicon-plus-sign" ng-click="addVariantToOrder(variant)"></span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+  <a ng-click="done()" class="btn btn-primary">Done</a>
+</div>
