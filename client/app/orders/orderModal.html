@@ -1,6 +1,6 @@
 <div class="modal-header">
-  <h3 class="modal-title" ng-if="!product.id">New Order</h3>
-  <h3 class="modal-title" ng-if="product.id">Edit Order</h3>
+  <h3 class="modal-title" ng-if="!order.id">New Order</h3>
+  <h3 class="modal-title" ng-if="order.id">Edit Order</h3>
 </div>
 <div class="modal-body">
   <h4>Basic Information</h4>
@@ -11,7 +11,8 @@
           <label for="customer">Customer</label>
           <input type="text" class="form-control" id="customer" ng-model="selectedCustomer"
                  typeahead="customer as customer.name for customer in getCustomers($viewValue)"
-                 typeahead-on-select="addCustomerHandler($item, $model, $label)">
+                 typeahead-on-select="addCustomerHandler($item, $model, $label)" ng-if="!order.id">
+          <p class="form-control" id="customer"ng-if="order.id">{{order.customer.name}}</p>
         </div>
       </div>
       <div class="col-md-4">
@@ -31,7 +32,7 @@
       <th>Total</th>
     </thead>
     <tbody>
-      <tr ng-repeat="product in orderProducts">
+      <tr ng-repeat="product in order.order_products">
         <td>{{product.name}}<br>{{product.description}}</td>
         <td><input type="number" ng-model="product.quantity"></td>
         <td><input type="text" ng-model="product.price"></td>

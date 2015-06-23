@@ -5,19 +5,10 @@ angular.module('pontoApp')
     $log.log('order');
     $log.log(order);
     $scope.order = order;
-    $scope.orderProducts = [];
+    $scope.order.order_products = $scope.order.order_products || [];
     // TODO: break these out into separate controllers
     $scope.addresses = [];
     $scope.orderTypes = [];
-
-    var init = function() {
-      // if ($scope.order.id) {
-      //   $scope.getAddresses();
-      //   $scope.getContacts();
-      // }
-
-      // $scope.getOrderTypes();
-    };
 
     // $scope.getOrderTypes = function() {
     //   $http.get(API_BASE_URL + '/order_types/')
@@ -32,6 +23,17 @@ angular.module('pontoApp')
     //     });
     // };
 
+    $scope.getOrderInfo = function() {
+      return $http.get(API_BASE_URL + '/orders/' + $scope.order.id)
+        .success(function(data, status, headers, config) {
+          $scope.order = data;
+        })
+        .error(function(data, status, headers, config) {
+          $log.warn('error getting order with id: ' + $scope.order.id);
+          $log.log(data);
+        });
+    };
+
     $scope.getContacts = function() {
       $http.get(API_BASE_URL + '/customers/' + $scope.order.customer.id + '/customer_contacts')
         .success(function(data, status, headers, config) {
@@ -43,6 +45,16 @@ angular.module('pontoApp')
           $log.warn('error getting contacts');
           $log.log(data);
         });
+    };
+
+    $scope.getCustomerInfo = function() {
+      if ($scope.order.customer_id) {
+        return $http.get(API_BASE_URL + '/customers/' + $scope.order.customer_id)
+          .then(function(response) {
+            $scope.order.customer = response.data;
+            $log.log($scope.order);
+          });
+      }
     };
 
     $scope.getCustomers = function(searchVal) {
@@ -80,8 +92,7 @@ angular.module('pontoApp')
     };
 
     $scope.save = function() {
-      $scope.order.order_addresses_attributes = $scope.addresses;
-      $scope.order.order_contacts_attributes = $scope.contacts;
+      $scope.order.order_products_attributes = $scope.order.order_products;
 
       var requestBody = { order: $scope.order };
 
@@ -118,8 +129,16 @@ angular.module('pontoApp')
       $log.log('heard addVariantToOrder');
       $log.log(event);
       $log.log(variant);
-      $scope.orderProducts.push(variant);
+      $scope.order.order_products.push(_.omit(variant, 'id'));
     });
+
+    var init = function() {
+      if ($scope.order.id) {
+        $scope.getOrderInfo().then(function() {
+          $scope.getCustomerInfo();
+        });
+      }
+    };
 
     init();
   });

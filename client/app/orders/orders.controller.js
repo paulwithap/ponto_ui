@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('pontoApp')
-  .controller('OrdersCtrl', function ($scope, $http, $log, $modal) {
+  .controller('OrdersCtrl', function ($scope, $http, $log, $modal, API_BASE_URL) {
     $scope.getOrders = function() {
-      $http.get('http://localhost:3000/api/v1/orders').success(function(response) {
+      $http.get(API_BASE_URL + '/orders').success(function(response) {
         $scope.orders = response;
       });
     };
