@@ -6,22 +6,6 @@ angular.module('pontoApp')
     $log.log(order);
     $scope.order = order;
     $scope.order.order_products = $scope.order.order_products || [];
-    // TODO: break these out into separate controllers
-    $scope.addresses = [];
-    $scope.orderTypes = [];
-
-    // $scope.getOrderTypes = function() {
-    //   $http.get(API_BASE_URL + '/order_types/')
-    //     .success(function(data, status, headers, config) {
-    //       $log.info('got order types');
-    //       $log.log(data);
-    //       $scope.orderTypes = data;
-    //     })
-    //     .error(function(data, status, headers, config) {
-    //       $log.warn('error getting orderTypes');
-    //       $log.log(data);
-    //     });
-    // };
 
     $scope.getOrderInfo = function() {
       return $http.get(API_BASE_URL + '/orders/' + $scope.order.id)
@@ -67,15 +51,6 @@ angular.module('pontoApp')
         $log.log(response);
         return response.data;
       });
-        // .success(function(data, status, headers, config) {
-        //   $log.info('got customers');
-        //   $log.log(data);
-        //   return data;
-        // })
-        // .error(function(data, status, headers, config) {
-        //   $log.warn('error getting customers');
-        //   $log.log(data);
-        // });
     };
 
     $scope.addProducts = function() {
@@ -125,18 +100,28 @@ angular.module('pontoApp')
       $modalInstance.dismiss('cancel');
     };
 
+    $scope.recalculateTotals = function() {
+      $scope.order.subtotal = $scope.order.subtotal || 0;
+      $scope.order.total = $scope.order.total || 0;
+      _.each($scope.order.order_products, function(orderProduct) {
+        $scope.order.subtotal += orderProduct.price * orderProduct.quantity;
+      });
+      $scope.order.total = $scope.order.subtotal;
+    };
+
     $rootScope.$on('PVQuickAdd.addVariantToOrder', function(event, variant) {
       $log.log('heard addVariantToOrder');
       $log.log(event);
       $log.log(variant);
+      // order_product.id != order_product.product_variant_id
+      variant.product_variant_id = variant.id;
       $scope.order.order_products.push(_.omit(variant, 'id'));
+      $scope.recalculateTotals();
     });
 
     var init = function() {
       if ($scope.order.id) {
-        $scope.getOrderInfo().then(function() {
-          $scope.getCustomerInfo();
-        });
+        return $scope.getOrderInfo();
       }
     };
 

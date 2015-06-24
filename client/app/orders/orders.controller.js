@@ -3,7 +3,11 @@
 angular.module('pontoApp')
   .controller('OrdersCtrl', function ($scope, $http, $log, $modal, API_BASE_URL) {
     $scope.getOrders = function() {
-      $http.get(API_BASE_URL + '/orders').success(function(response) {
+      $http.get(API_BASE_URL + '/orders', {
+        params: {
+          includes: 'products,customer'
+        }
+      }).success(function(response) {
         $scope.orders = response;
       });
     };
@@ -22,6 +26,12 @@ angular.module('pontoApp')
           }
         }
       });
+
+      modalInstance.result.then(function(order) {
+        $scope.getOrders();
+      }, function() {
+        $log.info('Modal dismissed.');
+      })
     };
 
     var init = function() {

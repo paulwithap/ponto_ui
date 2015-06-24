@@ -38,6 +38,12 @@
         <td><input type="text" ng-model="product.price"></td>
         <td>{{product.quantity * product.price}}</td>
       </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>Order Total</td>
+        <td>{{order.total}}</td>
+      </tr>
     </tbody>
   </table>
   <a ng-click="addProducts()">Add Products to Order</a>
