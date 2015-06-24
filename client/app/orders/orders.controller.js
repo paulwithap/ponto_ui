@@ -5,7 +5,7 @@ angular.module('pontoApp')
     $scope.getOrders = function() {
       $http.get(API_BASE_URL + '/orders', {
         params: {
-          includes: 'products,customer'
+          includes: 'customer'
         }
       }).success(function(response) {
         $scope.orders = response;
