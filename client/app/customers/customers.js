@@ -17,10 +17,10 @@ angular.module('pontoApp')
         url: '/dashboard',
         templateUrl: 'app/customers/dashboard/customerDashboard.html',
         controller: 'CustomerDashboardCtrl'
-      });
+      })
       .state('customer.orders', {
         url: '/orders',
         templateUrl: 'app/customers/orders/customerOrders.html',
-        controller: 'CustomerDashboardCtrl'
+        controller: 'CustomerOrdersCtrl'
       });
   });
