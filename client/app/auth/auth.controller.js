@@ -3,6 +3,7 @@
 angular.module('pontoApp')
   .controller('AuthCtrl', function ($scope, $http, $state, $rootScope, $timeout, Auth) {
     $scope.referrer = 'main';
+    $scope.loginError = '';
 
     var init = function() {
       if ($state.current.name === 'logout') {
@@ -16,10 +17,13 @@ angular.module('pontoApp')
 
     $scope.login = function() {
       if ($scope.loginForm.$valid) {
+        $scope.loginError = '';
         Auth.login($scope.user)
           .then(function(response) {
             $state.go($scope.referrer);
           }, function(reason) {
+            console.log(reason);
+            $scope.loginError = reason.error;
           });
       } else {
         console.log('the form fucked up');
