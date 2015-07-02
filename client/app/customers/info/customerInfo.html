@@ -1,0 +1,71 @@
+<form name="infoForm">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3>Basic Information</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="customerName">Customer Name</label>
+                <input type="text" class="form-control" id="customerName" ng-model="customer.name">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="customerResaleLicense">Resale License</label>
+                <input type="text" class="form-control" id="customerResaleLicense" ng-model="customer.resale_license">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="customerTaxId">Tax ID</label>
+                <input type="text" class="form-control" id="customerTaxId" ng-model="customer.tax_id">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="customerWebsite">Website</label>
+                <input type="text" class="form-control" id="customerWebsite" ng-model="customer.website">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="customerNotes">Notes</label>
+                <textarea name="notes" id="customerNotes" rows="3" class="form-control" ng-model="customer.notes"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h3>Purchasing Information</h3>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="customerTypes">Customer Type</label>
+            <select name="customerTypes" id="customerTypes" class="form-control"
+                    ng-options="type.id as type.name for type in customerTypes" ng-model="customer.customer_type_id"></select>
+          </div>
+          <a ng-click="addCustomerType()">Add New Customer Type</a>
+          <div class=""><br></div>
+          <div class="form-group">
+            <label for="customerOrderMinimum">Order Minimum</label>
+            <input type="text" class="form-control" id="customerOrderMinimum">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

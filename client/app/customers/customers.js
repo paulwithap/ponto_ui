@@ -18,6 +18,11 @@ angular.module('pontoApp')
         templateUrl: 'app/customers/dashboard/customerDashboard.html',
         controller: 'CustomerDashboardCtrl'
       })
+      .state('customer.info', {
+        url: '/info',
+        templateUrl: 'app/customers/info/customerInfo.html',
+        controller: 'CustomerInfoCtrl'
+      })
       .state('customer.orders', {
         url: '/orders',
         templateUrl: 'app/customers/orders/customerOrders.html',

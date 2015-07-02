@@ -2,14 +2,16 @@
 <div class="container">
   <div class="col-md-12">
     <h1>{{customer.name}}</h1>
+    <br>
     <ul class="nav nav-pills">
       <li><a href="/customers/{{customer.id}}/dashboard">Dashboard</a></li>
-      <li><a href="#">Info</a></li>
+      <li><a ui-sref="customer.info({customerId: customer.id})">Info</a></li>
       <li><a ui-sref="customer.orders({customerId: customer.id})">Orders</a></li>
       <li><a href="#">Contacts</a></li>
       <li><a href="#">Addresses</a></li>
       <li><a href="#">Products</a></li>
     </ul>
+    <br>
     <div ui-view=""></div>
   </div>
 </div>
