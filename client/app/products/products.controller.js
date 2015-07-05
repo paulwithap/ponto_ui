@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('pontoApp')
-  .controller('ProductsCtrl', function ($scope, $http, $log, $modal) {
+  .controller('ProductsCtrl', function ($scope, $http, $log, $modal, API_BASE_URL) {
     $scope.products = [];
 
     $scope.getProducts = function() {
-      $http.get('http://localhost:3000/api/v1/products').success(function(response) {
+      $http.get(API_BASE_URL + '/products').success(function(response) {
         $scope.products = response;
       });
     };

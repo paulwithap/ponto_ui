@@ -1,24 +1,31 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <div class="container">
   <div class="col-md-12">
-    <a ng-click="openModal()" class="btn btn-primary pull-right">New Order</a>
-    <table class="table table-hover">
-      <thead>
-        <th>Order #</th>
-        <th>Purchase Order #</th>
-        <th>Customer</th>
-        <th>Total</th>
-        <th>Outstanding Balance</th>
-      </thead>
-      <tbody>
-        <tr ng-repeat="order in orders" ng-click="openModal(order)" class="order-tr">
-          <td>{{order.id}}</td>
-          <td>{{order.po_number}}</td>
-          <td>{{order.customer.name}}</td>
-          <td>{{order.total}}</td>
-          <td>{{order.outstanding_balance}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row">
+      <a ng-click="openModal()" class="btn btn-primary pull-right">New Order</a>
+    </div>
+    <div><br></div>
+    <div class="row">
+      <div class="card">
+        <table class="table table-hover">
+          <thead>
+            <th>Order #</th>
+            <th>Purchase Order #</th>
+            <th>Customer</th>
+            <th>Total</th>
+            <th>Outstanding Balance</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="order in orders" ng-click="openModal(order)" class="order-tr">
+              <td>{{order.id}}</td>
+              <td>{{order.po_number}}</td>
+              <td>{{order.customer.name}}</td>
+              <td>{{order.total}}</td>
+              <td>{{order.outstanding_balance}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>

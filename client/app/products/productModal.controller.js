@@ -167,6 +167,19 @@ angular.module('pontoApp')
       $scope.generateVariants();
     };
 
+    $scope.onImageAdded = function($file, $event, $flow) {
+      $event.preventDefault();
+
+      $http.get(API_BASE_URL + '/products/image_upload_key')
+        .success(function(data, status, headers, config) {
+          console.log('got image upload key');
+          console.log(data);
+        })
+        .error(function(data, status, headers, config) {
+          console.error('GET image upload key failed');
+        });
+    };
+
     // $scope.getOptions = function() {
     //   $http.get(API_BASE_URL + '/products/' + $scope.product.id + '/product_options')
     //     .success(function(data, status, headers, config) {

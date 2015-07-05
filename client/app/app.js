@@ -6,7 +6,8 @@ angular.module('pontoApp', [
   'ngSanitize',
   'ui.router',
   'ui.bootstrap',
-  'ngTagsInput'
+  'ngTagsInput',
+  'flow'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider
@@ -14,4 +15,4 @@ angular.module('pontoApp', [
 
     $locationProvider.html5Mode(true);
   })
-  .constant('API_BASE_URL', 'http://localhost:3000/api/v1');
+  .constant('API_BASE_URL', 'http://localhost:5000/api/v1');
