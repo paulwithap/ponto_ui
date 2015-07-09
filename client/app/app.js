@@ -10,7 +10,7 @@ angular.module('pontoApp', [
   'ui.router',
   'ui.bootstrap',
   'ngTagsInput',
-  'flow'
+  'ngFileUpload'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider

@@ -17,21 +17,9 @@
       <label for="productDescription">Description</label>
       <textarea name="notes" id="productDescription" rows="3" class="form-control" ng-model="product.description"></textarea>
     </div>
-    <div flow-init
-         flow-file-added="onImageAdded($file, $event, $flow)"
-         flow-file-success="$file.msg = $message">
-
-      <!-- <input type="file" flow-btn/> -->
-      Input OR Other element as upload button
-      <span class="btn btn-primary" flow-btn>Upload File</span>
-
-      <table>
-        <tr ng-repeat="file in $flow.files">
-            <td>{{$index+1}}</td>
-            <td>{{file.name}}</td>
-            <td>{{file.msg}}</td>
-        </tr>
-      </table>
+    <div class="button" ngf-select ng-model="productImages" ngf-change="onImageAdded($files)">Upload using model $watch</div>
+    <div>
+      <img ng-src="{{imageUrl}}" alt="{{imageUrl}}" ng-repeat="imageUrl in product.product_images">
     </div>
     <div class="form-group">
       <input type="checkbox" class="form-control" id="productHasVariants" ng-model="product.hasVariants" ng-checked="product.variants.length" ng-disabled="product.variants.length">

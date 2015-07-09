@@ -46,22 +46,31 @@ angular.module('pontoApp')
       }
     };
   })
-  .factory('AuthInterceptor', function($q, $injector) {
+  .factory('AuthInterceptor', function($q, $injector, API_BASE_URL) {
     var Storage = $injector.get('Storage');
 
     return {
       request: function(config) {
-        var token;
-        if (Storage.get('auth_token')) {
-          token = Storage.get('auth_token');
+        console.log('request config');
+        console.log(config);
+        // Don't send authorization headers to other sources
+        if (config.url.indexOf(API_BASE_URL) !== -1) {
+          console.log('setting auth header');
+          var token;
+          if (Storage.get('auth_token')) {
+            token = Storage.get('auth_token');
+          }
+          if (token) {
+            config.headers.Authorization = 'Bearer ' + token;
+          }
         }
-        if (token) {
-          config.headers.Authorization = 'Bearer ' + token;
-        }
+
         return config;
       },
       responseError: function(response) {
-        if (response.status === 401 || response.status === 403) {
+        console.log('responseError');
+        console.log(response);
+        if ((response.config.url.indexOf(API_BASE_URL) !== -1) && (response.status === 401 || response.status === 403)) {
           Storage.clear('auth_token');
           $injector.get('$state').go('login');
         }

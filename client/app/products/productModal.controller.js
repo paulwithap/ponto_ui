@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('pontoApp')
-  .controller('ProductModalCtrl', function ($scope, $http, $log, $window, $modalInstance, $modal, product, API_BASE_URL) {
+  .controller('ProductModalCtrl', function ($scope, $http, $log, $window, $modalInstance, $modal, product, API_BASE_URL, Upload) {
     $log.log('product');
     $log.log(product);
     $scope.product = product;
+    $scope.product.product_images = $scope.product.product_images || [];
     // TODO: break these out into separate controllers
     $scope.variants = [];
     $scope.customerTypes = [];
@@ -167,17 +168,48 @@ angular.module('pontoApp')
       $scope.generateVariants();
     };
 
-    $scope.onImageAdded = function($file, $event, $flow) {
-      $event.preventDefault();
+    var _uploadImageToS3 = function(file, url, fields) {
+      Upload.upload({
+              url: url, //S3 upload url including bucket name
+              method: 'POST',
+              fields : fields,
+              file: file,
+            }).progress(function(evt) {
+              console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.file.name);
+            }).success(function(data, status, headers, config) {
+              // file is uploaded successfully
+              console.log('file ' + config.file.name + 'is uploaded successfully. Response: ' + data);
+              $scope.onImageUploadSuccess(data);
+            }).error(function(data, status, headers, config) {
+              // handle error;
+              console.log('error uploading image');
+              console.log(data);
+            });
+    };
 
-      $http.get(API_BASE_URL + '/products/image_upload_key')
-        .success(function(data, status, headers, config) {
-          console.log('got image upload key');
-          console.log(data);
-        })
-        .error(function(data, status, headers, config) {
-          console.error('GET image upload key failed');
-        });
+    $scope.onImageUploadSuccess = function(response) {
+      console.log('response');
+      var xml = $($.parseXML(response));
+      var location = xml.find('Location');
+      console.log(location);
+      $scope.product.product_images.push(location[0].textContent);
+      console.log($scope.product.product_images);
+    };
+
+    // TODO: restrict to jpg/png, handle multiple files at once
+    $scope.onImageAdded = function($files, $event) {
+      // $event.preventDefault();
+      if ($files.length) {
+        $http.get(API_BASE_URL + '/products/image_upload_key', {params: {file_type: $files[0].type}})
+          .success(function(data, status, headers, config) {
+            console.log('got image upload key');
+            console.log(data);
+            _uploadImageToS3($files[0], data.url, data.fields);
+          })
+          .error(function(data, status, headers, config) {
+            console.error('GET image upload key failed');
+          });
+      }
     };
 
     // $scope.getOptions = function() {
