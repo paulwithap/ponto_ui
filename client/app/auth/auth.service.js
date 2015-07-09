@@ -12,7 +12,7 @@
 */
 
 angular.module('pontoApp')
-  .factory('Auth', function(Storage, $q, $http) {
+  .factory('Auth', function(Storage, $q, $http, AUTH_URL) {
     // Service logic
     // ...
 
@@ -30,7 +30,7 @@ angular.module('pontoApp')
       login: function(credentials) {
         var self = this;
         var deferred = $q.defer();
-        $http.post('http://localhost:3000/auth', credentials)
+        $http.post(AUTH_URL, credentials)
           .success(function(data, status, headers, config) {
             self.setToken(data.token);
             deferred.resolve(data);
