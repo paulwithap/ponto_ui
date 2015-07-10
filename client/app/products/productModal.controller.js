@@ -45,6 +45,7 @@ angular.module('pontoApp')
           $log.info('got variants');
           $log.log(data);
           $scope.variants = data;
+          $scope.product.hasVariants = $scope.variants.length ? true : false;
         })
         .error(function(data, status, headers, config) {
           $log.warn('error getting variants');
@@ -194,22 +195,25 @@ angular.module('pontoApp')
       console.log(location);
       $scope.product.product_images.push(location[0].textContent);
       console.log($scope.product.product_images);
+      $scope.save();
     };
 
     // TODO: restrict to jpg/png, handle multiple files at once
     $scope.onImageAdded = function($files, $event) {
       // $event.preventDefault();
-      if ($files.length) {
-        $http.get(API_BASE_URL + '/products/image_upload_key', {params: {file_type: $files[0].type}})
-          .success(function(data, status, headers, config) {
-            console.log('got image upload key');
-            console.log(data);
-            _uploadImageToS3($files[0], data.url, data.fields);
-          })
-          .error(function(data, status, headers, config) {
-            console.error('GET image upload key failed');
-          });
-      }
+      $scope.product.product_images.push('https://ponto-dev.s3.amazonaws.com/uploads%2F8fa2c07f-5581-4def-90c2-c76a6294ffa5%2Fak1-nvy.jpg');
+      $scope.save();
+      // if ($files.length) {
+      //   $http.get(API_BASE_URL + '/products/image_upload_key', {params: {file_type: $files[0].type}})
+      //     .success(function(data, status, headers, config) {
+      //       console.log('got image upload key');
+      //       console.log(data);
+      //       _uploadImageToS3($files[0], data.url, data.fields);
+      //     })
+      //     .error(function(data, status, headers, config) {
+      //       console.error('GET image upload key failed');
+      //     });
+      // }
     };
 
     // $scope.getOptions = function() {

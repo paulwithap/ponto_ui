@@ -1,5 +1,5 @@
 'use strict';
-var SERVER_URL = 'http://localhost:5000',
+var SERVER_URL = 'http://localhost:3000',
     AUTH_URL = SERVER_URL + '/auth',
     API_BASE_URL = SERVER_URL + '/api/v1';
 

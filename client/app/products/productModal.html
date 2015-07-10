@@ -17,7 +17,7 @@
       <label for="productDescription">Description</label>
       <textarea name="notes" id="productDescription" rows="3" class="form-control" ng-model="product.description"></textarea>
     </div>
-    <div class="button" ngf-select ng-model="productImages" ngf-change="onImageAdded($files)">Upload using model $watch</div>
+    <span class="btn btn-primary" ngf-select ng-model="productImages" ngf-change="onImageAdded($files)">Upload using model $watch</span>
     <div>
       <img ng-src="{{imageUrl}}" alt="{{imageUrl}}" ng-repeat="imageUrl in product.product_images">
     </div>
